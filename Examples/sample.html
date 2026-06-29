@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Huffman Compressor — HTML Sample</title>
+  <style>
+    body        { font-family: Arial, sans-serif; max-width: 700px; margin: 40px auto; color: #222; }
+    h1          { color: #2c5f8a; }
+    h2          { color: #3a7abf; border-bottom: 1px solid #ccc; padding-bottom: 4px; }
+    code        { background: #f4f4f4; padding: 2px 6px; border-radius: 3px; font-size: 0.9em; }
+    pre         { background: #f4f4f4; padding: 12px; border-radius: 5px; overflow-x: auto; }
+    table       { border-collapse: collapse; width: 100%; margin-top: 12px; }
+    th, td      { border: 1px solid #ccc; padding: 8px 12px; text-align: left; }
+    th          { background: #2c5f8a; color: white; }
+    tr:nth-child(even) { background: #f9f9f9; }
+    .note       { background: #fffbcc; border-left: 4px solid #f0c000; padding: 10px 14px; margin: 16px 0; }
+  </style>
+</head>
+<body>
+
+  <h1>Huffman File Compressor</h1>
+  <p>
+    A lossless file compression tool built in C++ using the Huffman Coding algorithm.
+    Works on any file type — text, HTML, source code, and more.
+  </p>
+
+  <h2>How to Use</h2>
+  <pre>
+# Compile
+g++ -std=c++17 -O2 -o huffman huffman.cpp
+
+# Compress
+huffman -c examples/sample.txt  compressed.bin
+
+# Decompress
+huffman -d compressed.bin       restored.txt
+  </pre>
+
+  <h2>How It Works</h2>
+  <p>
+    Huffman coding counts how often each byte appears in the input file.
+    Frequent bytes are assigned short binary codes.
+    Rare bytes are assigned longer binary codes.
+    The result is a compressed file that uses fewer total bits.
+  </p>
+
+  <h2>Performance</h2>
+  <table>
+    <tr><th>File Type</th><th>Original</th><th>Compressed</th><th>Ratio</th></tr>
+    <tr><td>English text</td><td>2,472 bytes</td><td>~1,500 bytes</td><td>~39%</td></tr>
+    <tr><td>HTML file</td><td>~1,800 bytes</td><td>~1,100 bytes</td><td>~38%</td></tr>
+    <tr><td>Source code</td><td>11,278 bytes</td><td>~7,000 bytes</td><td>~38%</td></tr>
+    <tr><td>JPEG image</td><td>—</td><td>larger</td><td>not suitable</td></tr>
+  </table>
+
+  <div class="note">
+    <strong>Note:</strong> Huffman coding works best on files with non-uniform byte distribution.
+    Already-compressed formats like <code>.jpg</code>, <code>.png</code>, or <code>.zip</code>
+    will not compress further — they may even get slightly larger.
+  </div>
+
+  <h2>Data Structures Used</h2>
+  <ul>
+    <li><strong>Binary Tree</strong> — stores the Huffman prefix-free codes</li>
+    <li><strong>Min-Heap</strong> (<code>std::priority_queue</code>) — greedy selection of lowest-frequency nodes</li>
+    <li><strong>Hash Map</strong> (<code>std::unordered_map</code>) — O(1) frequency lookup and code table</li>
+    <li><strong>Bit Buffer</strong> — packs individual bits into bytes for disk I/O</li>
+  </ul>
+
+</body>
+</html>

@@ -1,0 +1,60 @@
+=============================================
+  HUFFMAN COMPRESSION — SAMPLE INPUT FILE
+=============================================
+
+This file is used to demonstrate lossless file compression
+using the Huffman Coding algorithm.
+
+--- WHY HUFFMAN WORKS ON THIS FILE ---
+
+In English text, some characters appear far more often than others.
+The letter 'e' is the most common letter in English.
+The letter 'z' appears very rarely in everyday writing.
+
+Standard encoding (ASCII) gives every character exactly 8 bits.
+It does not matter if the character appears once or one thousand times.
+Huffman encoding changes this by studying the file first.
+
+Frequent characters get short binary codes  — maybe just 2 or 3 bits.
+Rare characters get longer binary codes     — maybe 8 or 9 bits.
+The overall file gets smaller because the frequent ones dominate.
+
+--- FREQUENCY DEMONSTRATION ---
+
+eeeeeeeeeeeeeeeeeeee  (e appears a lot — will get a very short code)
+tttttttttttttttt      (t is also very common in English)
+aaaaaaaaaaaa          (a is moderately common)
+ssssssssss            (s appears frequently)
+iiiiiiii              (i is common)
+oooooo                (o is moderately common)
+nnnnnn                (n is moderately common)
+zz                    (z is rare — will get a longer code)
+qq                    (q is rare)
+xx                    (x is rare)
+
+--- WHAT THE COMPRESSOR DOES ---
+
+Step 1: Reads every byte and counts how often each one appears.
+Step 2: Builds a binary tree using a greedy min-heap algorithm.
+        The two least frequent bytes are always merged first.
+        This is repeated until one root node remains.
+Step 3: Assigns binary codes by walking the tree.
+        Left branch adds a 0. Right branch adds a 1.
+        Frequent bytes sit near the root — short codes.
+        Rare bytes sit deep in the tree — long codes.
+Step 4: Encodes the entire file using these codes.
+Step 5: Writes the tree structure and encoded bits to disk.
+
+The decompressor reads the tree back from the file header,
+then walks it bit by bit to reconstruct the original exactly.
+
+--- RESULT ---
+
+This file compresses well because English text is highly non-uniform.
+Some bytes appear hundreds of times. Others appear once or not at all.
+Huffman exploits that gap to reduce the total number of bits needed.
+
+The restored file will be byte-for-byte identical to this one.
+That is what lossless compression means.
+
+=============================================
