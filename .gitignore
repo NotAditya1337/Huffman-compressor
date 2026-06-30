@@ -1,3 +1,13 @@
+# Build artifacts
+*.o
+huffman
 huffman.exe
-huffman*.bin
-restored_*
+
+# Generated test output
+examples/*.bin
+examples/restored*
+
+# OS / editor junk
+.vscode/
+.DS_Store
+*.swp
